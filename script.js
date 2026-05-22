@@ -21,7 +21,50 @@ function helloWorld(){
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
-      message: 'Hello World!'
+      message: 'Hello'
     }
   )
+}
+
+function simpleWrite(){
+  firebase.database().ref('/').set(
+    {
+      message: 'Goodbye'
+    }
+  )
+}
+
+function simpleRead(){
+  firebase.database().ref('/message').once('value', displayMessage, fb_readError);
+  
+}
+
+function displayMessage(snapshot){
+  var dbData = snapshot.val();
+  if (dbData == null) {
+    console.log ("The message you were looking for doesn't exist.")
+  } else {
+  console.log ("The message is: " + snapshot.val());
+  HTML_OUTPUT.innerHTML = snapshot.val();
+  }
+}
+
+function fb_readError(error) {
+  console.log("There was an error reading the message from the database");
+  console.error(error);
+}
+
+function readListener() {
+  console.log("Setting up listener for message");
+  firebase.database().ref("/message").on('value', displayMessage);
+}
+
+function displayMessage(snapshot){
+  HTML_OUTPUT.innerHTML = snapshot.val();
+  console.log("Something in the database has been called upon.")
+}
+
+function stopListener() {
+  console.log("stopping listeners from message");
+  firebase.database().ref('/message').off();
 }
