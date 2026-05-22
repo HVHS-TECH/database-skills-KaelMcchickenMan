@@ -8,13 +8,14 @@
 // Return: n/a
 /**************************************************************/
   const firebaseConfig = {
-    apiKey: ,
-    authDomain: ,
-    databaseURL: ,
-    projectId: ,
-    storageBucket: ,
-    messagingSenderId:,
-    appId:
+     apiKey: "AIzaSyC698AZIW0NmDmYTgTX5wusXH3FuR5DpUs",
+  authDomain: "kael-12comp.firebaseapp.com",
+  databaseURL: "https://kael-12comp-default-rtdb.firebaseio.com",
+  projectId: "kael-12comp",
+  storageBucket: "kael-12comp.firebasestorage.app",
+  messagingSenderId: "501051539939",
+  appId: "1:501051539939:web:d094144e5effc1192be0d6",
+  measurementId: "G-NSN1KLH9RE"
   };
 
   // Initialize Firebase
