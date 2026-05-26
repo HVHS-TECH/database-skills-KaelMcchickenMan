@@ -20,10 +20,24 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 
 // Variables
 let user = "You";
-let score = "0";
+let score = 0;
+
+
+function setName() {
+  console.log("called setName");
+ let user = prompt("What is your name?");
+
+ firebase.database().ref('/game1/users').set(user);
+firebase.database().ref('/game1/users/' + user).set(score);
+
+}
 
 function addScore(){
   score = score + 1;
+}
+
+function resetScore() {
+  score = 0;
 }
 
 
@@ -65,6 +79,8 @@ function fb_readError(error) {
   console.error(error);
 }
 
+
+
 function readListener() {
   console.log("Setting up listener for message");
   firebase.database().ref("/message").on('value', displayMessage);
@@ -93,7 +109,7 @@ highscoreTable = {
 }
 
 function setUserScoreTo0() {
-firebase.database().ref('/game1/users/Seva/').set(0);
+firebase.database().ref('/game1/users/'+user).set(0);
 };
 
 function setUserBasedOnVariable() {
@@ -107,3 +123,4 @@ function updateUserBasedOnVariable() {
 function removeUserScore() {
     firebase.database().ref('/game1/users/'+user).remove(score);
 }
+
