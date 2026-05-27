@@ -19,15 +19,15 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 /**************************************************************/
 
 // Variables
-let user = "You";
+let user = "Anonymous";
 let score = 0;
 
 
 function setName() {
   console.log("called setName");
- let user = prompt("What is your name?");
+ user = prompt("What is your name?");
 
- firebase.database().ref('/game1/users').set(user);
+ //firebase.database().ref('/game1/users').set(user);
 firebase.database().ref('/game1/users/' + user).set(score);
 
 }
@@ -38,6 +38,7 @@ function addScore(){
 
 function resetScore() {
   score = 0;
+  firebase.database().ref('/game1/users/'+user).set(score);
 }
 
 
@@ -116,11 +117,32 @@ function setUserBasedOnVariable() {
   firebase.database().ref('/game1/users/'+user).set(score);
 };
 
-function updateUserBasedOnVariable() {
-  firebase.database().ref('/game1/users/'+user).update(score);
+//function updateUserBasedOnVariable() {
+ // console.log("updatingUserScore")
+ // firebase.database().ref('/game1/users/'+user).update(score);
+//}
+
+async function readUserHighscore() {
+  console.log("reading user highscore");
+ await firebase.database().ref('/game1/users/'+user).once('value', logDatabaseRead, fb_readError)
 }
 
 function removeUserScore() {
     firebase.database().ref('/game1/users/'+user).remove(score);
 }
 
+async function readHighscores() {
+  console.log("reading highscores");
+ await firebase.database().ref('/game1/users/').once('value', logGlobalDatabaseRead, fb_readError)
+}
+
+
+
+
+function logDatabaseRead(snapshot) {
+  console.log("your score is: " + snapshot.val());
+}
+
+function logGlobalDatabaseRead(snapshot) {
+  console.log(snapshot.val());
+}
